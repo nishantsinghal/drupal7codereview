@@ -1,9 +1,15 @@
 <?php
 /**
-* all extra functions of mymod
-**/
+ * @file
+ * The Mymod module.
+ * Developer-Nishant
+ * In this module custom module/view/block designing is shown.
+ */
 
-function mymod_form($form,&$form_state) {
+/**
+ * Function for custom form.
+ */ 
+function mymod_form($form, &$form_state) {
 	$form['first_name'] = array(
    '#type'=>'textfield',
    '#title'=>t('First Name'),
@@ -25,12 +31,18 @@ function mymod_form($form,&$form_state) {
    '#value' => t('Save'),	
 	);
 	return $form;
- }
+}
 
- function mymod_form_validate($form, &$form_state) {
- }
+/**
+ * Function for validating form fields.
+ */ 
+function mymod_form_validate($form, &$form_state) {
+}
 
- function mymod_form_submit($form, &$form_state) {
+/**
+ * Function for submit form values.
+ */ 
+function mymod_form_submit($form, &$form_state) {
   $fname = $form_state['values']['first_name'];
   $lname = $form_state['values']['last_name'];
   $pass  = $form_state['values']['pass'];
@@ -48,11 +60,13 @@ function mymod_form($form,&$form_state) {
   if ($result !== FALSE){
     drupal_set_message('data saved successfully.');
   }
- }
+}
 
 
-
- function mymod_form_show($data) {
+/**
+ * Function for show the form values.
+ */ 
+function mymod_form_show($data) {
   $query = "SELECT * FROM {mymod_form} where fname like '%$data%'";
   $result = db_query($query);
   $rows = array();
@@ -81,72 +95,85 @@ function mymod_form($form,&$form_state) {
   return theme('table', array('header' => $header, 'rows' => $rows));
 }
 
-  function mymod_form_filtershow($form,&$form_state) {
-    $form['first_name'] = array(
-     '#type'=>'textfield',
-     '#title'=>t('First Name filter'), 
-     ); 
+/**
+ * Function for show form values based on filters.
+ */ 
+function mymod_form_filtershow($form,&$form_state) {
+  $form['first_name'] = array(
+   '#type'=>'textfield',
+   '#title'=>t('First Name filter'), 
+   ); 
 
-    $form['submit_button'] = array(
-     '#type' => 'submit',
-     '#value' => t('Search'), 
-    );
-    //$fname = $form_state['input']['first_name'];
-    //variable_set('fname',$fname);
-    //$show = mymod_form_show($fname);
-    //dpm($fname);
-    //$GLOBALS['z'] = $fname;
-    //dpm($GLOBALS['z']);
-    //dpm($form_state);///
-    //$view = array('frm'=>$form,'fname'=>$fname);
-    return $form;
-  }
+  $form['submit_button'] = array(
+   '#type' => 'submit',
+   '#value' => t('Search'), 
+  );
+  //$fname = $form_state['input']['first_name'];
+  //variable_set('fname',$fname);
+  //$show = mymod_form_show($fname);
+  //dpm($fname);
+  //$GLOBALS['z'] = $fname;
+  //dpm($GLOBALS['z']);
+  //dpm($form_state);///
+  //$view = array('frm'=>$form,'fname'=>$fname);
+  return $form;
+}
 
-  function mymod_form_filtershow_submit($form,&$form_state) {
-    $fname = $form_state['values']['first_name'];
-    // dpm($fname);
-    // dpm($form_state); 
-    drupal_goto("examples/form-show", array(
-    'query' => array(
-        'firstname' => $fname,
+/**
+ * Function for filter values submission.
+ */ 
+function mymod_form_filtershow_submit($form,&$form_state) {
+  $fname = $form_state['values']['first_name'];
+  // dpm($fname);
+  // dpm($form_state); 
+  drupal_goto("examples/form-show", array(
+  'query' => array(
+      'firstname' => $fname,
     ),
-    ));
-  }
+   )
+  );
+}
 
-  function filtershow($form) {
-    //print_r($filter);
-    // $fname = $filter['fname'];
-    // $form1 = $filter['frm'];
-    // dpm($filter);
-    // dpm($fname);
-    //dpm($GLOBALS['z']);
-    //if(isset($form_state['values']['submit_button']) && !empty($form_state['values']['submit_button'])) {
-    //$fname = variable_get('fname');
-    //dpm($fname);
+/**
+ * Function for show table after filter.
+ */ 
+function filtershow($form) {
+  //print_r($filter);
+  // $fname = $filter['fname'];
+  // $form1 = $filter['frm'];
+  // dpm($filter);
+  // dpm($fname);
+  //dpm($GLOBALS['z']);
+  //if(isset($form_state['values']['submit_button']) && !empty($form_state['values']['submit_button'])) {
+  //$fname = variable_get('fname');
+  //dpm($fname);
 
-    $view  = render(drupal_get_form($form));
-    $fname = $_GET['firstname'];
-    $view .= mymod_form_show($fname);
-    //dpm($form);
-    //dpm($form_state);
-  //  }
-    return $view;
-  }
+  $view  = render(drupal_get_form($form));
+  $fname = $_GET['firstname'];
+  $view .= mymod_form_show($fname);
+  //dpm($form);
+  //dpm($form_state);
+//  }
+  return $view;
+}
 
-  function myblock_view() {
-    $query  = "Select lname from {mymod_form}";
-    $result = db_query($query);
-    $rows = array();
-    $header = array(t('Last Name'));
+/**
+ * Function for show block view.
+ */ 
+function myblock_view() {
+  $query  = "Select lname from {mymod_form}";
+  $result = db_query($query);
+  $rows = array();
+  $header = array(t('Last Name'));
 //   return theme('table', $header, $rows);
-   
-    foreach ($result as $key => $value) {
+ 
+  foreach ($result as $key => $value) {
     $row = array();
     $row[] = $value->lname;
     $row[] = $value->password;
     //....etc, the rest of the fields
     $rows[] = $row;
   } 
-  //dpm($rows);
-   return theme('table1', array('header' => $header, 'rows' => $rows));
-  }
+//dpm($rows);
+  return theme('table1', array('header' => $header, 'rows' => $rows));
+}

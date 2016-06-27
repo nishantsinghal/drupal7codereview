@@ -5,6 +5,10 @@
  * Developer-Nishant
  * Contains all function related to song custom view.
  */
+
+/**
+ * Function for get filter on songs page.
+ */ 
 function song_filter_form($form, &$form_state) {
    $form['movie'] = array(
      '#type' => 'select',
@@ -18,6 +22,9 @@ function song_filter_form($form, &$form_state) {
     return $form;
 }
 
+/**
+ * Function for submit filtervalues.
+ */ 
 function song_filter_form_submit($form, &$form_state) {
   $movieid = $form_state['values']['movie'];
   drupal_goto("examples/songs", array(
@@ -27,6 +34,9 @@ function song_filter_form_submit($form, &$form_state) {
     ));
 }
 
+/**
+ * Function for get movie filter on songs.
+ */ 
 function getMovie() {
   $query = new EntityFieldQuery();
     $query
@@ -48,36 +58,38 @@ function getMovie() {
     return $list;
 }
 
+/**
+ * Function for show songs on basis of filters.
+ */ 
 function song_view($form) {
   $query = new EntityFieldQuery();
-    $query
+  $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'songs');
 
-    $parameter = drupal_get_query_parameters();
+  $parameter = drupal_get_query_parameters();
     //dpm($parameter);
-    if (isset($parameter['movie']) && $parameter['movie'] != "a") {
-      $query->fieldCondition('field_movie', 'target_id', $parameter['movie']);
-    }
+  if (isset($parameter['movie']) && $parameter['movie'] != "a") {
+    $query->fieldCondition('field_movie', 'target_id', $parameter['movie']);
+  }
 
-    $result = $query->execute();
-    $nodes = array();
-    if (isset($result['node'])) {
-      $nids = array_keys($result['node']);
-      $nodes = node_load_multiple($nids);
-    }
-    //print_r($nodes);
-    $list = array();
-    foreach ($nodes as $node) {
-      $options = array('absolute' => TRUE);
-      $url = url('node/' . $node->nid, $options);
-      $list[] = '<a href=' . $url . '>' . $node->title . '</a>';
-    }
+  $result = $query->execute();
+  $nodes = array();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $nodes = node_load_multiple($nids);
+  }
+  //print_r($nodes);
+  $list = array();
+  foreach ($nodes as $node) {
+    $options = array('absolute' => TRUE);
+    $url = url('node/' . $node->nid, $options);
+    $list[] = '<a href=' . $url . '>' . $node->title . '</a>';
+  }
 
-    $theme_args = array('items' => $list, 'type' => 'ul');
-    $content = theme('item_list', $theme_args);
-    $view  = render(drupal_get_form($form));
-    $view .= $content;
-    return $view;
-
+  $theme_args = array('items' => $list, 'type' => 'ul');
+  $content = theme('item_list', $theme_args);
+  $view  = render(drupal_get_form($form));
+  $view .= $content;
+  return $view;
 }

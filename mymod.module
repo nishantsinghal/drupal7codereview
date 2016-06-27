@@ -9,12 +9,12 @@
 
 
 module_load_include('inc', 'mymod', 'block_view');
+
 /**
  * Implements hook_menu().
  */
  function mymod_menu() {
   $items = array();
-
   $items['examples/form-example'] = array( //this creates a URL that will call this form at "examples/form-example"
     'title' => 'Example Form', //page title
     'description' => 'A form to mess around with.',
@@ -140,5 +140,3 @@ module_load_include('inc', 'mymod', 'block_view');
       ),
     );
   }
-
- 

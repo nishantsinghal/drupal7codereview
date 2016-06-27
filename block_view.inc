@@ -5,6 +5,10 @@
  * Developer-Nishant
  * Contains all function related to block custom view.
  */
+
+  /**
+   * Function for actor all block.
+   */ 
   function actor_block_view() {
     // Used for get current path url---------------------
     $path = current_path();
@@ -73,6 +77,9 @@
     }
   }
 
+  /**
+   * Function for movie all block.
+   */ 
   function movie_block_view() {
     $path = current_path();
     //dpm($path);

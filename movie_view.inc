@@ -6,6 +6,10 @@
  * Contains all function related to Movie  custom view.
  */
 
+
+/**
+ * Function for show movie filteration.
+ */ 
 function movie_filter_form($form, &$form_state) {
   $form['category'] = array(
      '#type' => 'select',
@@ -29,6 +33,10 @@ function movie_filter_form($form, &$form_state) {
     return $form;
 } 
 
+
+/**
+ * Function for action of submitting filter form.
+ */ 
 function movie_filter_form_submit($form, &$form_state) {
   $actorid = $form_state['values']['actor'];
   $categoryid = $form_state['values']['category'];
@@ -39,10 +47,13 @@ function movie_filter_form_submit($form, &$form_state) {
         'category' => $categoryid,
         'movietype' => $movietypeid,
     ),
-    ));
-
+  )
+);
 }
 
+/**
+ * Function for get category filter on movie.
+ */ 
 function getCategory() {
   $query = new EntityFieldQuery();
     $query
@@ -64,6 +75,9 @@ function getCategory() {
     return $list;
 }
 
+/**
+ * Function for get movietype filter on movie.
+ */ 
 function getMovietype() {
   $query = new EntityFieldQuery();
     $query
@@ -85,6 +99,9 @@ function getMovietype() {
     return $list;
 }
 
+/**
+ * Function for get actor filter on movie.
+ */ 
 function getActor() {
   $query = new EntityFieldQuery();
     $query
@@ -106,7 +123,9 @@ function getActor() {
     return $list;
 }
 
-
+/**
+ * Function for get view of movies based on filters.
+ */ 
 function movie_view($form) {
   $query = new EntityFieldQuery();
     $query
@@ -173,11 +192,9 @@ function movie_view($form) {
     $list[$i] .= '</p>';
     $i++;
   } 
-    $theme_args = array('items' => $list, 'type' => 'ul');
-    $content = theme('item_list', $theme_args);
-
-    $view  = render(drupal_get_form($form));
-    $view .= $content;
-    return $view;
-
+  $theme_args = array('items' => $list, 'type' => 'ul');
+  $content = theme('item_list', $theme_args);
+  $view  = render(drupal_get_form($form));
+  $view .= $content;
+  return $view;
 }

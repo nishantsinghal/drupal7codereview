@@ -6,6 +6,10 @@
  * Contains all function related to actor custom view.
  */
 
+
+/**
+ * Function for get filter on actors.
+ */ 
 function actor_filter_form($form, &$form_state) {
   $form['category'] = array(
      '#type' => 'select',
@@ -19,6 +23,9 @@ function actor_filter_form($form, &$form_state) {
     return $form;
 }
 
+/**
+ * Function for submit filter on actor.
+ */ 
 function actor_filter_form_submit($form, &$form_state) {
   $categoryid = $form_state['values']['category'];
   drupal_goto("examples/actors", array(
@@ -29,6 +36,9 @@ function actor_filter_form_submit($form, &$form_state) {
 
 }
 
+/**
+ * Function for get category filter on actor.
+ */ 
 function getCategory() {
   $query = new EntityFieldQuery();
     $query
@@ -50,6 +60,9 @@ function getCategory() {
     return $list;
 }
 
+/**
+ * Function for get actors view filter on movie.
+ */ 
 function actor_view($form) {
   $query = new EntityFieldQuery();
   $query
