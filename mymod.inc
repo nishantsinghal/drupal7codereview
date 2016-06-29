@@ -121,6 +121,10 @@ function mymod_form_filtershow($form,&$form_state) {
 
 /**
  * Function for filter values submission.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function mymod_form_filtershow_submit($form,&$form_state) {
   $fname = $form_state['values']['first_name'];
@@ -136,6 +140,10 @@ function mymod_form_filtershow_submit($form,&$form_state) {
 
 /**
  * Function for show table after filter.
+ *
+ * @param $form
+ * Take form name as parameter.
+ *
  */ 
 function filtershow($form) {
   //print_r($filter);

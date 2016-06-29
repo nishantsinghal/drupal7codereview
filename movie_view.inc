@@ -9,6 +9,10 @@
 
 /**
  * Function for show movie filteration.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function movie_filter_form($form, &$form_state) {
   $form['category'] = array(
@@ -36,6 +40,10 @@ function movie_filter_form($form, &$form_state) {
 
 /**
  * Function for action of submitting filter form.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function movie_filter_form_submit($form, &$form_state) {
   $actorid = $form_state['values']['actor'];
@@ -125,6 +133,10 @@ function getActor() {
 
 /**
  * Function for get view of movies based on filters.
+ *
+ * @param $form
+ * Take form name as parameter.
+ *
  */ 
 function movie_view($form) {
   $query = new EntityFieldQuery();

@@ -8,6 +8,10 @@
 
 /**
  * Function for get filter on songs page.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function song_filter_form($form, &$form_state) {
    $form['movie'] = array(
@@ -24,6 +28,10 @@ function song_filter_form($form, &$form_state) {
 
 /**
  * Function for submit filtervalues.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function song_filter_form_submit($form, &$form_state) {
   $movieid = $form_state['values']['movie'];
@@ -60,6 +68,10 @@ function getMovie() {
 
 /**
  * Function for show songs on basis of filters.
+ *
+ * @param $form
+ * Take form name as a parameter.
+ *
  */ 
 function song_view($form) {
   $query = new EntityFieldQuery();
@@ -82,9 +94,13 @@ function song_view($form) {
   //print_r($nodes);
   $list = array();
   foreach ($nodes as $node) {
-    $options = array('absolute' => TRUE);
-    $url = url('node/' . $node->nid, $options);
-    $list[] = '<a href=' . $url . '>' . $node->title . '</a>';
+    // $options = array('absolute' => TRUE);
+    // $url = url('node/' . $node->nid, $options);
+    // $list[] = '<a href=' . $url . '>' . $node->title . '</a>';
+    $path = 'node/' . $node->nid;
+    $path_alias = drupal_get_path_alias($path);
+    $song_link = l(t($node->title), $path_alias);
+    $list[] = $song_link ;
   }
 
   $theme_args = array('items' => $list, 'type' => 'ul');

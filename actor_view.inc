@@ -9,6 +9,10 @@
 
 /**
  * Function for get filter on actors.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function actor_filter_form($form, &$form_state) {
   $form['category'] = array(
@@ -25,6 +29,10 @@ function actor_filter_form($form, &$form_state) {
 
 /**
  * Function for submit filter on actor.
+ *
+ * @param form $form
+ * Take form field in considration.
+ *
  */ 
 function actor_filter_form_submit($form, &$form_state) {
   $categoryid = $form_state['values']['category'];
@@ -62,6 +70,10 @@ function getCategory() {
 
 /**
  * Function for get actors view filter on movie.
+ *
+ * @param $form
+ * Take form name as parameter.
+ *
  */ 
 function actor_view($form) {
   $query = new EntityFieldQuery();
@@ -85,9 +97,13 @@ function actor_view($form) {
     //print_r($nodes);
     $list = array();
     foreach ($nodes as $node) {
-      $options = array('absolute' => TRUE);
-      $url = url('node/' . $node->nid, $options);
-      $list[] = '<a href=' . $url . '>' . $node->title . '</a>';
+      //$options = array('absolute' => TRUE);
+      //$url = url('node/' . $node->nid, $options);
+      //$list[] = '<a href=' . $url . '>' . $node->title . '</a>';
+      $path = 'node/' . $node->nid;
+      $path_alias = drupal_get_path_alias($path);
+      $actor_link = l(t($node->title), $path_alias);
+      $list[] = $actor_link ;
     }
 
     $theme_args = array('items' => $list, 'type' => 'ul');
